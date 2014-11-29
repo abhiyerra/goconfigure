@@ -1,3 +1,5 @@
+[![GoDoc](https://godoc.org/github.com/abhiyerra/goconfigure?status.svg)](https://godoc.org/github.com/abhiyerra/goconfigure)
+
 # goconfigure
 
 ## Introduction
