@@ -1,6 +1,7 @@
-package configility
+package goconfigure
 
 import (
+	"errors"
 	"fmt"
 	"github.com/coreos/go-etcd/etcd"
 	"os"
@@ -9,15 +10,19 @@ import (
 type ParseType int
 
 const (
-	Env ParseType = iota
-	Etcd
+	EnvParser ParseType = iota
+	EtcdParser
 )
 
+type Etcd struct {
+	Client    *etcd.Client
+	Namespace string
+}
+
 type Config struct {
-	EtcdClient    etcd.Client
-	EtcdNamespace string
-	ParseType     ParseType
-	keys          map[string]Key
+	Etcd      Etcd
+	ParseType ParseType
+	keys      map[string]Key
 }
 
 type Key struct {
@@ -45,26 +50,26 @@ func (c *Config) Add(name, desc, defaultValue, envKey, etcdKey string) {
 	}
 }
 
-func (c *Config) Get(key string) string {
+func (c *Config) Get(key string) (string, error) {
 	k := c.keys[key]
 
 	switch c.ParseType {
-	case Env:
+	case EnvParser:
 		value := os.Getenv(k.EnvKey)
 		if value == "" {
-			return k.DefaultValue
+			return k.DefaultValue, errors.New("Key is empty")
 		}
-	case Etcd:
-		resp, err := c.EtcdClient.Get(
-			fmt.Sprintf("/%s/%s", c.EtcdNamespace, k),
+	case EtcdParser:
+		resp, err := c.Etcd.Client.Get(
+			fmt.Sprintf("/%s/%s", c.Etcd.Namespace, k),
 			false,
 			false)
 		if err != nil {
-			return k.DefaultValue
+			return k.DefaultValue, err
 		}
 
-		return resp.Node.Value
+		return resp.Node.Value, nil
 	}
 
-	return ""
+	return "", errors.New("Invalid Parser")
 }
