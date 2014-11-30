@@ -1,6 +1,6 @@
 [![GoDoc](https://godoc.org/github.com/abhiyerra/goconfigure?status.svg)](https://godoc.org/github.com/abhiyerra/goconfigure)
 
-# goconfigure
+# goconfigure - Go Library to get configuration from different sources
 
 ## Introduction
 
