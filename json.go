@@ -1,3 +1,4 @@
+// Read json configuration without goconfigure.
 package goconfigure
 
 import (
@@ -5,6 +6,7 @@ import (
 	"io/ioutil"
 )
 
+// Read json to an object from a filename.
 func ReadJsonConfigFromFile(fileName string, o *interface{}) error {
 	fileRead, err := ioutil.ReadFile(fileName)
 	if err != nil {
@@ -14,6 +16,7 @@ func ReadJsonConfigFromFile(fileName string, o *interface{}) error {
 	return ReadJsonConfig(fileRead, o)
 }
 
+// Read json to an object from a stream of bytes.
 func ReadJsonConfig(fileRead []byte, o *interface{}) error {
 	err := json.Unmarshal(fileRead, o)
 	if err != nil {
