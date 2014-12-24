@@ -1,8 +1,9 @@
+# Deprecated user [Viper](http://spf13.com/project/viper)
 [![GoDoc](https://godoc.org/github.com/abhiyerra/goconfigure?status.svg)](https://godoc.org/github.com/abhiyerra/goconfigure)
 
-# goconfigure - Go Library to get configuration from different sources
+## goconfigure - Go Library to get configuration from different sources
 
-## Introduction
+### Introduction
 
 Golang configuration parser via the following ways:
 
@@ -14,7 +15,7 @@ Golang configuration parser via the following ways:
  - [ ] ZooKeeper
  - [ ] Consul
 
-## Example
+### Example
 
     etcdClient := etcd.NewClient([]string{"http://127.0.0.1:4001"})
     config := goconfigure.Config{
